@@ -138,6 +138,7 @@ function jmpua_get_options() {
 		if (!is_array($options)) {
 			$options['message_class'] = '';
 			$options['xtra_messages'] = '';
+			$options['country_messages'] = '';
 			$options['saleflash_shop'] = true;
 			$options['saleflash_cart'] = true;
 			$options['saleflash_checkout'] = false;
