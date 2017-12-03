@@ -126,8 +126,15 @@ if ( ! class_exists( 'jm_polylang_user_alerts' ) ) {
             echo(self::user_alert(array('name' => 'saleflash')));
         }
         public static function shippingalert(){
-            echo('<tr><td colspan="2">' . self::user_alert(array('name' => 'shippingnotice')) .
-                '</td></tr>');
+            $output = self::user_alert(array('name' => 'shippingnotice'));
+            if ($output!=''){
+                //if the output is only html comment debugging code, don't display the row
+                if (substr($output, 0, 4) === '<!--') {
+                    echo $output;
+                } else {
+                    echo('<tr><td colspan="2">' . $output . '</td></tr>');
+                }
+            }
         }
         
 		/**
@@ -143,13 +150,16 @@ if ( ! class_exists( 'jm_polylang_user_alerts' ) ) {
             $output='';
             
             /* don't output visible message if no translation available */
-            if ($translation == $a['name']){
-                $output = '<!-- shortcode user-alert : no translation available for ' . 
+            if ($translation == '' || $translation == $a['name']){
+                //on non-production environments script debug should be enabled
+                if (defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ){
+                    $output = '<!-- shortcode user-alert : no translation available for ' . 
                     $a['name'] . ' -->';
+                }
             } else {
                 $messageclass = self::get_option('messageclass', 'jmpua_options');
                 $output = '<div class="' . $messageclass . ' user-alert '  . $a['name'] . '">' . 
-                    wpautop(pll__($a['name'])) . '</div>';
+                    wpautop($translation) . '</div>';
             }
             return $output;            
         }
