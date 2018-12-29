@@ -12,13 +12,13 @@
  * Description: An easy way to extend Polylang to add extra multilingual messages to your installation.
  * Tags: locale, language, translate, message, polylang, woocommerce
  * Contributors: jonathanmoorebcsorg
- * Version: 1.0
+ * Version: 1.1
  * Stable Tag: 1.0
  * Requires At Least: 4.7
- * Tested Up To: 4.9
+ * Tested Up To: 5.0.2
  * WC requires at least: 3.0.0
- * WC tested up to: 3.2.5
- * Requires PHP: 5.3
+ * WC tested up to: 3.5.3
+ * Requires PHP: 7.0
  * Version Components: {major}.{minor}.{bugfix}-{stage}{level}
  *
  *	{major}		Major code changes / re-writes or significant feature changes.
@@ -46,6 +46,7 @@ if ( ! defined( 'ABSPATH' ) ){
 }
 
 include_once( plugin_dir_path(__FILE__) . 'jm-polylang-user-alerts-settings.php' );
+include_once( plugin_dir_path( __FILE__ ) . 'jm-poly-super-socializer.php' );
 
 if ( ! class_exists( 'jm_polylang_user_alerts' ) ) {
 
@@ -199,8 +200,7 @@ if ( ! class_exists( 'jm_polylang_user_alerts' ) ) {
          *
          * @return mixed
          */
-        public static function get_option($option, $section, $default = '')
-        {
+		public static function get_option( $option, $section, $default = '' ) {
             $options = get_option($section);
 
             if (!empty($options[$option])) {  // equivalent to: isset($options[$option]) && $options[$option]
@@ -242,10 +242,8 @@ if ( ! class_exists( 'jm_polylang_user_alerts' ) ) {
 					$plugin_data = get_plugin_data( __FILE__, false );	// $markup = false
 					deactivate_plugins( $plugin, true );	// $silent = true
 					wp_die( 
-						'<p>'.sprintf( __( '%1$s requires %2$s version %3$s or higher and has been deactivated.',
-							'jm-polylang-user-alerts' ), $plugin_data['Name'], 'WordPress', self::$wp_min_version ).'</p>'.
-						'<p>'.sprintf( __( 'Please upgrade %1$s before trying to reactivate the %2$s plugin.',
-							'jm-polylang-user-alerts' ), 'WordPress', $plugin_data['Name'] ).'</p>'
+					'<p>' . sprintf( __( '%1$s requires %2$s version %3$s or higher and has been deactivated.', 'jm-polylang-user-alerts' ), $plugin_data[ 'Name' ], 'WordPress', self::$wp_min_version ) . '</p>' .
+					'<p>' . sprintf( __( 'Please upgrade %1$s before trying to reactivate the %2$s plugin.', 'jm-polylang-user-alerts' ), 'WordPress', $plugin_data[ 'Name' ] ) . '</p>'
 					);
 				}
 			}
@@ -265,10 +263,8 @@ if ( ! class_exists( 'jm_polylang_user_alerts' ) ) {
 					$plugin_data = get_plugin_data( __FILE__, false );	// $markup = false
 					deactivate_plugins( $plugin, true );	// $silent = true
 					wp_die( 
-						'<p>'.sprintf( __( '%1$s requires %2$s version %3$s or higher and has been deactivated.',
-							'jm-polylang-user-alerts' ), $plugin_data['Name'], 'Polylang', self::$polylang_min_version ).'</p>'.
-						'<p>'.sprintf( __( 'Please install or upgrade %1$s before trying to reactivate the %2$s plugin.',
-							'jm-polylang-user-alerts' ), 'Polylang', $plugin_data['Name'] ).'</p>'
+					'<p>' . sprintf( __( '%1$s requires %2$s version %3$s or higher and has been deactivated.', 'jm-polylang-user-alerts' ), $plugin_data[ 'Name' ], 'Polylang', self::$polylang_min_version ) . '</p>' .
+					'<p>' . sprintf( __( 'Please install or upgrade %1$s before trying to reactivate the %2$s plugin.', 'jm-polylang-user-alerts' ), 'Polylang', $plugin_data[ 'Name' ] ) . '</p>'
 					);
 				}
 			}
